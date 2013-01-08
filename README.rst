@@ -22,6 +22,6 @@ Usage
 2. Open a web browser to http://localhost:8088/
 
 If you enter 'gattaca' as the sequence and '2' as the kmer size, 
-you should see something like::
+you should see something like:
 
     .. image:: https://raw.github.com/arq5x/toy_bottle_bootstrap_app/master/app.png
