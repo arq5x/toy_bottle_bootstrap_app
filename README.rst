@@ -3,18 +3,19 @@ for exposing Python code as web applications.
 
 Installation
 ============
-1. First install bottle.py:
+1. First install bottle.py::
 
     pip install bottle
 	
-2. Now clone this repository and navigate to the source directory:
+2. Now clone this repository and navigate to the source directory::
 
 	git clone git://github.com/arq5x/toy_bottle_bootstrap_app.git
 	cd toy_bottle_bootstrap_app	
 
+
 Usage
 ============
-1. From the `toy_bottle_bootstrap_app` directory, fire up the web app:
+1. From the `toy_bottle_bootstrap_app` directory, fire up the web app::
    
     python kmer-browser.py
 	
