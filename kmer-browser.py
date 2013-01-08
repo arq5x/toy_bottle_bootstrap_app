@@ -7,10 +7,11 @@ from bottle import jinja2_template as template
 
 def count_kmers(sequence, k):
     """
-    Given a sequence S, return each kmer of size k
-    and the number of times the kmer occurs in S.
+    Given a sequence S, return a dictionary of 
+    each kmer of size k and the number of times 
+    the kmer occurs in S.
     
-    This function is case insentive.
+    This function is case insensitive.
     
     >>> kmer_counts = count_kmers('actgtgtac', 2)
     >>> for kmer in kmer_counts:
@@ -22,8 +23,10 @@ def count_kmers(sequence, k):
     ct 1
     """
     sequence = sequence.lower()
-    # be careful to not go beyond the end of the sequence.
     kmer_counts = Counter()
+    
+    # grab each, overlapping kmer of size k, while
+    # being careful to not go beyond the end of the sequence.
     for i in xrange((len(sequence) - k) + 1):
         kmer = sequence[i:i+k]
         kmer_counts[kmer] += 1
@@ -53,7 +56,19 @@ def server_static(filepath):
 # Bottle will execute the function.
 @app.route('/', method='GET')
 def index():
-
+    """
+    This function will be called when navigating to:
+    http://localhost:8088/.
+    
+    This function:
+    1. Extracts the sequence and k values from the form using
+       the request.GET.get() functions.
+    2. Calls count_kmers() (see above) to count the kmers
+    3. Sends the kmer_counts dictionary to the index.html
+       Jinja template.  The Jinja-ed Python code in the template 
+       processes the kmer_counts and prints to the web page
+       as an HTML table.
+    """
     # the user clicked the "submit" button
     if request.GET.get('submit','').strip():
 
