@@ -31,24 +31,26 @@ def count_kmers(sequence, k):
     return kmer_counts
 
 
+# create a new Bottle app instance
+app = Bottle()
 
+# add the views directory to Bottle's list of directories in which
+# to search for HTML templates.
 base_dir = os.path.dirname(__file__)
 TEMPLATE_PATH.append(os.path.abspath(os.path.join(base_dir, 'views' )))
 
-
-app = Bottle()
-
-
-# -- serve static files, files located in static 
+# serve static files, such as Bootstrap's CSS
+# expects file to be located in static 
 static_folder = 'static'
 _static_folder = os.path.join( os.path.dirname(__file__), static_folder)
 @app.route('/static/<filepath:path>')
 def server_static(filepath):
     return static_file(filepath, root=_static_folder)
 
-
-
-
+# Bind "http://localhost:8088/" to the index function below.
+# This is the key concept behind Bottle.  URLs are explicitly
+# bound to Python functions.  When you navigate to that URL,
+# Bottle will execute the function.
 @app.route('/', method='GET')
 def index():
 
@@ -56,21 +58,21 @@ def index():
     if request.GET.get('submit','').strip():
 
         # retrieve the values in the web form
-        sequence = request.GET.get('sequence', '').strip()
-        k        = str(request.GET.get('k', '').strip())
+        seq = request.GET.get('seq', '').strip()
+        k   = str(request.GET.get('k', '').strip())
 
         # ignore if the user did not enter a sequence or a k
         # before clicking the submit button
-        if len(sequence) == 0 or len(k) == 0: 
+        if len(seq) == 0 or len(k) == 0: 
             return template('index')
         
         # count the kmers in the sequence
-        kmer_counts = count_kmers(sequence, int(k))
+        kmer_counts = count_kmers(seq, int(k))
         
         # send the kmer counts to the web page
-        return template('index', kmer_counts=kmer_counts,
-                                 sequence=sequence,
-                                 k=k)
+        return template('index', kmer_counts=kmer_counts, seq=seq, k=k)
+                                 
+    # nothing has happened.  just serve a page with no results.
     else:
         return template('index')
 
