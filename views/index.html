@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Big bad kmer counter{% endblock %}
+
+{% block head %}{% endblock %}
+
+
+{% block body %}
+
+<div class='row page'>
+	
+	<form class="well span6 offset3">
+		<div class="row">
+			<div class="span3">
+				<p>
+					<h3>Count kmers</h3>
+				</p>
+			</div>
+		</div>
+		<hr>
+        
+        <!-- Sequence form field -->
+		<div class="control-group">
+			<label class="control-label" for="sequence">
+				<strong>Sequence</strong>
+			</label>
+			<div class="controls">
+				<input class="span6" type="text" name="sequence", value="{{sequence}}">
+			</div>
+		</div>
+        
+        <!-- kmer form field -->
+		<div class="control-group">
+			<label class="control-label" for="k">
+				<strong>Kmer size (<em>k</em>)</strong>
+			</label>
+			<div class="controls">
+				<input class="span6" type="text" name="k" value="{{k}}">
+			</div>
+		</div>
+        
+        <!-- Submit button -->
+		<div class="control-group">
+			<div class="controls">
+				<button type="submit" class="btn btn-primary" name="submit" value="submit">
+					Submit
+				</button>
+			</div>
+		</div>
+	</div>
+</form>
+	
+<div class="span6 offset3">
+	<table class='table table-striped table-hover table-condensed'>
+		<tbody>
+            {%for kmer in kmer_counts %}
+			<tr>
+				<td>{{kmer}}</td>
+                <td>{{kmer_counts[kmer]}}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div> <!-- end of debug-pane -->
+	
+
+		
+</div><!-- end of page -->
+
+{% endblock %}
